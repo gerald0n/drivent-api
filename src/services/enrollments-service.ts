@@ -12,7 +12,7 @@ type AddressFromCEP = {
   uf: string;
 };
 
-async function getAddressFromCEP(CEP: string) {
+async function getAddressFromCEP(CEP: string): Promise<AddressFromCEP> {
   const result = await request.get(`${process.env.VIA_CEP_API}/${CEP}/json/`);
 
   if (!result.data || result.data.erro) {
@@ -55,6 +55,7 @@ type GetAddressResult = Omit<Address, 'createdAt' | 'updatedAt' | 'enrollmentId'
 
 async function createOrUpdateEnrollmentWithAddress(params: CreateOrUpdateEnrollmentWithAddress) {
   const enrollment = exclude(params, 'address');
+  console.log(enrollment);
   enrollment.birthday = new Date(enrollment.birthday);
   const address = getAddressForUpsert(params.address);
 
