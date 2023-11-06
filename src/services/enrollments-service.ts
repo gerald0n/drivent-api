@@ -2,8 +2,7 @@ import { Address, Enrollment } from '@prisma/client';
 import { request } from '@/utils/request';
 import { addressRepository, CreateAddressParams, enrollmentRepository, CreateEnrollmentParams } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
-import { invalidCepError } from '@/errors/invalid-CEP-error';
-import { notFoundError } from '@/errors/not-found-error';
+import { invalidCepError, notFoundError } from '@/errors';
 
 type AddressFromCEP = {
   logradouro: string;
