@@ -1,8 +1,9 @@
 import { Address, Enrollment } from '@prisma/client';
 import { request } from '@/utils/request';
-import { invalidDataError, notFoundError } from '@/errors';
 import { addressRepository, CreateAddressParams, enrollmentRepository, CreateEnrollmentParams } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
+import { invalidCepError } from '@/errors/invalid-CEP-error';
+import { notFoundError } from '@/errors/not-found-error';
 
 type AddressFromCEP = {
   logradouro: string;
@@ -16,7 +17,7 @@ async function getAddressFromCEP(CEP: string) {
   const result = await request.get(`${process.env.VIA_CEP_API}/${CEP}/json/`);
 
   if (!result.data || result.data.erro) {
-    throw invalidDataError(CEP);
+    throw invalidCepError();
   }
 
   const dataResult: AddressFromCEP = {
@@ -58,7 +59,9 @@ async function createOrUpdateEnrollmentWithAddress(params: CreateOrUpdateEnrollm
   enrollment.birthday = new Date(enrollment.birthday);
   const address = getAddressForUpsert(params.address);
 
-  await getAddressFromCEP(address.cep);
+  const { cep } = address;
+
+  await getAddressFromCEP(cep);
 
   const newEnrollment = await enrollmentRepository.upsert(params.userId, enrollment, exclude(enrollment, 'userId'));
 
