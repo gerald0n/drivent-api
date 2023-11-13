@@ -26,7 +26,10 @@ async function getTicketByUserId(userId: number) {
     throw notFoundError();
   }
 
-  return ticket;
+  return {
+    ...ticket,
+    TicketType: ticketType,
+  };
 }
 
 export const ticketService = {
