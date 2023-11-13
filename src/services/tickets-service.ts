@@ -21,16 +21,7 @@ async function getTicketByUserId(userId: number) {
     throw notFoundError();
   }
 
-  const ticketType = await ticketRepository.getTicketTypeById(ticket.ticketTypeId);
-
-  if (!ticketType) {
-    throw notFoundError();
-  }
-
-  return {
-    ...ticket,
-    TicketType: ticketType,
-  };
+  return ticket;
 }
 
 async function insertNewTicketUser(userId: number, ticketTypeId: number) {

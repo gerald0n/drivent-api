@@ -23,6 +23,9 @@ function getEnrollmentByUserId(userId: number): Promise<Enrollment> {
 function getTicketByEnrollmentId(enrollmentId: number): Promise<Ticket> {
   return prisma.ticket.findUnique({
     where: { enrollmentId },
+    include: {
+      TicketType: true,
+    },
   });
 }
 
