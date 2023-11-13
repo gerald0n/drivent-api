@@ -14,7 +14,20 @@ async function getUserTicket(req: AuthenticatedRequest, res: Response) {
 
   const ticket = await ticketService.getTicketByUserId(userId);
 
-  res.status(200).send(ticket);
+  res.status(httpStatus.OK).send(ticket);
 }
 
-export { getTicketTypes, getUserTicket };
+async function insertNewTicketUser(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { ticketTypeId } = req.body as TicketBody;
+
+  const ticket = await ticketService.insertNewTicketUser(userId, ticketTypeId);
+
+  res.status(httpStatus.CREATED).send(ticket);
+}
+
+type TicketBody = {
+  ticketTypeId: number;
+};
+
+export { getTicketTypes, getUserTicket, insertNewTicketUser };
