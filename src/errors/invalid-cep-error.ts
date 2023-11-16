@@ -2,7 +2,7 @@ import { ApplicationError } from '@/protocols';
 
 export function invalidCepError(): ApplicationError {
   return {
-    name: 'InvalidCEPerror',
-    message: 'Invalid CEP!',
+    name: 'InvalidCEPError',
+    message: 'Invalid CEP search',
   };
 }
