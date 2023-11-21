@@ -10,7 +10,9 @@ async function validateUserBooking(userId: number) {
   const ticket = await ticketsRepository.findTicketByEnrollmentId(enrollment.id);
   if (!ticket) throw notFoundError();
 
-  if (ticket.status === TicketStatus.RESERVED) {
+  const type = await ticketsRepository.findTicketTypeById(ticket.ticketTypeId);
+
+  if (ticket.status === TicketStatus.RESERVED || type.isRemote || !type.includesHotel) {
     throw cannotListHotelsError();
   }
 }
