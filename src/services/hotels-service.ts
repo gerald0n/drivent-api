@@ -1,6 +1,6 @@
 import { TicketStatus } from '@prisma/client';
 import { invalidDataError, notFoundError } from '@/errors';
-import { cannotListHotelsError } from '@/errors/cannotListHotels-error';
+import { cannotListHotelsError } from '@/errors/cannot-list-hotels-error';
 import { enrollmentRepository, hotelRepository, ticketsRepository } from '@/repositories';
 
 async function validateUserBooking(userId: number) {
@@ -10,7 +10,7 @@ async function validateUserBooking(userId: number) {
   const ticket = await ticketsRepository.findTicketByEnrollmentId(enrollment.id);
   if (!ticket) throw notFoundError();
 
-  const type = await ticketsRepository.findTicketTypeById(ticket.ticketTypeId);
+  const type = ticket.TicketType;
 
   if (ticket.status === TicketStatus.RESERVED || type.isRemote || !type.includesHotel) {
     throw cannotListHotelsError();

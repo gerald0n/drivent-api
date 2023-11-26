@@ -14,10 +14,6 @@ export function handleApplicationErrors(
     });
   }
 
-  if (err.name === 'CannotListHotelsError') {
-    return res.status(httpStatus.PAYMENT_REQUIRED).send(err.message);
-  }
-
   if (err.name === 'ConflictError' || err.name === 'DuplicatedEmailError') {
     return res.status(httpStatus.CONFLICT).send({
       message: err.message,
@@ -52,6 +48,10 @@ export function handleApplicationErrors(
     return res.status(httpStatus.UNAUTHORIZED).send({
       message: err.message,
     });
+  }
+
+  if (err.name === 'CannotListHotelsError') {
+    return res.status(httpStatus.PAYMENT_REQUIRED).send(err.message);
   }
 
   if (err.hasOwnProperty('status') && err.name === 'RequestError') {
