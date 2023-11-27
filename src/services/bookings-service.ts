@@ -31,7 +31,7 @@ async function getBooking(userId: number) {
   return booking;
 }
 
-async function bookRoomById(userId: number, roomId: number) {
+async function bookRoomsById(userId: number, roomId: number) {
   await validateUserBooking(userId);
   await checkValidBooking(roomId);
 
@@ -54,7 +54,7 @@ async function changeBookingRoomById(userId: number, roomId: number) {
 }
 
 export const bookingService = {
-  bookRoomById,
+  bookRoomsById,
   getBooking,
   changeBookingRoomById,
 };

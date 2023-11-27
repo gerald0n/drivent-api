@@ -8,3 +8,5 @@ export * from './request-error';
 export * from './invalid-credentials-error';
 export * from './duplicate-email-error';
 export * from './cannot-booking-error';
+export * from './payment-required-error';
+export * from './cannot-proceed-booking-error';
